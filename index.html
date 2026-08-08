@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VaporOS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="loading-screen" aria-live="polite">
+        <img src="images/loading.gif" alt="Loading VaporOS...">
+        <p>Booting VaporOS...</p>
+    </div>
+
+    <main id="desktop" class="hidden" aria-label="VaporOS Desktop">
+        <div id="crt-overlay" aria-hidden="true"></div>
+        <div id="chromatic-overlay" aria-hidden="true"></div>
+        <div id="vhs-noise-overlay" aria-hidden="true"></div>
+        <div id="wave-distortion-overlay" aria-hidden="true"></div>
+
+        <section id="program-icons" aria-label="Programs">
+            <button class="program-icon" data-open="music-window" data-x="16" data-y="24" aria-label="Open Music Player">
+                <img src="images/program.png" alt="Program icon">
+                <span>Music Player</span>
+            </button>
+
+            <button class="program-icon" data-open="visualizer-window" data-x="16" data-y="90" aria-label="Open Music Visualizer">
+                <img src="images/program.png" alt="Program icon">
+                <span>Visualizer</span>
+            </button>
+
+            <button class="program-icon" data-action="extra-vibes" data-x="16" data-y="126" aria-label="Activate Extra Vibes">
+                <img src="images/program.png" alt="Program icon">
+                <span>EXTRA VIBES</span>
+            </button>
+
+            <button class="program-icon" data-open="buddy-window" data-x="16" data-y="228" aria-label="Open Buddies">
+                <img src="images/program.png" alt="Program icon">
+                <span>Buddies</span>
+            </button>
+
+            <button class="program-icon" data-open="games-window" data-x="16" data-y="330" aria-label="Open Games">
+                <img src="images/program.png" alt="Program icon">
+                <span>Games</span>
+            </button>
+
+            <button class="program-icon" data-open="browser-window" data-x="136" data-y="24" aria-label="Open Retro Browser">
+                <img src="images/program.png" alt="Program icon">
+                <span>Retro Browser</span>
+            </button>
+
+            <button class="program-icon" data-open="photo-window" data-x="136" data-y="126" aria-label="Open Photo Viewer">
+                <img src="images/program.png" alt="Program icon">
+                <span>Photo Viewer</span>
+            </button>
+
+            <button class="program-icon" data-open="paint-window" data-x="136" data-y="228" aria-label="Open Paint Lite">
+                <img src="images/program.png" alt="Program icon">
+                <span>Paint Lite</span>
+            </button>
+
+            <button class="program-icon" data-open="chat-window" data-x="136" data-y="330" aria-label="Open Chat Client">
+                <img src="images/program.png" alt="Program icon">
+                <span>Chat Client</span>
+            </button>
+
+            <button class="program-icon" data-open="monitor-window" data-x="256" data-y="24" aria-label="Open System Monitor">
+                <img src="images/program.png" alt="Program icon">
+                <span>System Monitor</span>
+            </button>
+
+            <button class="program-icon" data-open="console-window" data-x="256" data-y="126" aria-label="Open Glitch Console">
+                <img src="images/program.png" alt="Program icon">
+                <span>Glitch Console</span>
+            </button>
+
+            <button class="program-icon" data-open="screensaver-window" data-x="256" data-y="228" aria-label="Open Screensaver">
+                <img src="images/program.png" alt="Program icon">
+                <span>Screensaver</span>
+            </button>
+        </section>
+
+        <section id="window-layer">
+            <article id="music-window" class="window textbox-skin hidden" role="dialog" aria-label="Music Player">
+                <header class="window-titlebar drag-handle">
+                    <h2>🎧 Music Player</h2>
+                    <button class="close-window" data-close="music-window" aria-label="Close Music Player">×</button>
+                </header>
+
+                <div class="window-content">
+                    <p id="song-title">No track selected</p>
+
+                    <div class="transport-controls">
+                        <button id="prev-track" aria-label="Previous track">⏮</button>
+                        <button id="play-pause" aria-label="Play or pause">▶</button>
+                        <button id="next-track" aria-label="Next track">⏭</button>
+                    </div>
+
+                    <div class="time-row">
+                        <span id="current-time">0:00</span>
+                        <input id="seek-bar" type="range" min="0" max="100" value="0" aria-label="Playback position">
+                        <span id="duration">0:00</span>
+                    </div>
+
+                    <label class="volume-row" for="volume-slider">
+                        Volume
+                        <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.7" aria-label="Volume">
+                    </label>
+                </div>
+            </article>
+
+            <article id="visualizer-window" class="window hidden" role="dialog" aria-label="Music Visualizer">
+                <header class="window-titlebar drag-handle">
+                    <h2>📈 Music Visualizer</h2>
+                    <button class="close-window" data-close="visualizer-window" aria-label="Close Visualizer">×</button>
+                </header>
+
+                <div class="window-content visualizer-content">
+                    <p id="visualizer-status">Press play in Music Player to begin.</p>
+                    <canvas id="visualizer-canvas" width="640" height="230" aria-label="Audio visualizer canvas"></canvas>
+                </div>
+            </article>
+
+            <article id="buddy-window" class="window hidden" role="dialog" aria-label="Buddy Window">
+                <header class="window-titlebar drag-handle">
+                    <h2>🧡 Buddy</h2>
+                    <button class="close-window" data-close="buddy-window" aria-label="Close Buddy">×</button>
+                </header>
+
+                <div class="window-content buddy-content">
+                    <img id="buddy-image" src="images/eevee.gif" alt="Buddy companion">
+                    <p id="buddy-name">Buddy: Eevee</p>
+                    <div class="transport-controls buddy-controls">
+                        <button id="prev-buddy" aria-label="Previous buddy">⏮ Style</button>
+                        <button id="next-buddy" aria-label="Next buddy">Style ⏭</button>
+                    </div>
+                    <p>Use arrows to switch buddy style.</p>
+                </div>
+            </article>
+
+            <article id="games-window" class="window hidden" role="dialog" aria-label="Games Window">
+                <header class="window-titlebar drag-handle">
+                    <h2>🕹 Nostalgia Games</h2>
+                    <button class="close-window" data-close="games-window" aria-label="Close Games">×</button>
+                </header>
+
+                <div class="window-content">
+                    <div class="tabs">
+                        <button class="tab active" data-tab="ttt">Tic-Tac-Toe</button>
+                        <button class="tab" data-tab="solitaire">Solitaire Lite</button>
+                    </div>
+
+                    <section id="ttt-panel" class="game-panel active">
+                        <p id="ttt-status">Player X's turn</p>
+                        <div id="ttt-grid" aria-label="Tic Tac Toe Board"></div>
+                        <button id="ttt-reset">Reset Tic-Tac-Toe</button>
+                    </section>
+
+                    <section id="solitaire-panel" class="game-panel">
+                        <p id="solitaire-status">Build the stack up/down by rank.</p>
+                        <div class="solitaire-board">
+                            <div>
+                                <h3>Stock</h3>
+                                <button id="draw-card">Draw Card</button>
+                                <p id="stock-count">Cards left: 0</p>
+                            </div>
+                            <div>
+                                <h3>Waste</h3>
+                                <div id="waste-card" class="card">--</div>
+                                <button id="play-waste">Play Waste Card</button>
+                            </div>
+                            <div>
+                                <h3>Stack</h3>
+                                <div id="foundation-card" class="card">--</div>
+                            </div>
+                        </div>
+                        <button id="solitaire-reset">New Solitaire Game</button>
+                    </section>
+                </div>
+            </article>
+
+            <article id="browser-window" class="window hidden wide-window" role="dialog" aria-label="Retro Browser">
+                <header class="window-titlebar drag-handle">
+                    <h2>🌐 Vapor Browser 98</h2>
+                    <button class="close-window" data-close="browser-window" aria-label="Close Browser">×</button>
+                </header>
+                <div class="window-content browser-content">
+                    <div class="browser-toolbar">
+                        <button id="browser-back">←</button>
+                        <button id="browser-forward">→</button>
+                        <button id="browser-home">Home</button>
+                        <input id="browser-url" type="text" value="https://web.archive.org/web/19981202230410/http://google.stanford.edu/" aria-label="Browser URL">
+                        <button id="browser-go">Go</button>
+                        <button id="browser-open-external">Open Tab</button>
+                    </div>
+                    <p id="browser-status">Tip: If a page is blocked from embedding, use Open Tab.</p>
+                    <iframe id="browser-frame" title="Retro Browser Content"></iframe>
+                </div>
+            </article>
+
+            <article id="photo-window" class="window hidden" role="dialog" aria-label="Photo Viewer">
+                <header class="window-titlebar drag-handle">
+                    <h2>🖼 Photo Viewer</h2>
+                    <button class="close-window" data-close="photo-window" aria-label="Close Photo Viewer">×</button>
+                </header>
+                <div class="window-content photo-content">
+                    <img id="photo-viewer-image" src="images/Bliss_alt.jpg" alt="Viewer image">
+                    <p id="photo-caption">Bliss Alt</p>
+                    <div class="transport-controls">
+                        <button id="photo-prev">Previous</button>
+                        <button id="photo-next">Next</button>
+                    </div>
+                </div>
+            </article>
+
+            <article id="paint-window" class="window hidden" role="dialog" aria-label="Paint Lite">
+                <header class="window-titlebar drag-handle">
+                    <h2>🎨 Paint Lite</h2>
+                    <button class="close-window" data-close="paint-window" aria-label="Close Paint Lite">×</button>
+                </header>
+                <div class="window-content paint-content">
+                    <div class="paint-toolbar">
+                        <label>Color <input type="color" id="paint-color" value="#ff00cc"></label>
+                        <label>Size <input type="range" id="paint-size" min="1" max="24" value="5"></label>
+                        <button id="paint-clear">Clear</button>
+                    </div>
+                    <canvas id="paint-canvas" width="520" height="300" aria-label="Paint canvas"></canvas>
+                </div>
+            </article>
+
+            <article id="chat-window" class="window hidden" role="dialog" aria-label="Chat Client">
+                <header class="window-titlebar drag-handle">
+                    <h2>💬 Chat Client</h2>
+                    <button class="close-window" data-close="chat-window" aria-label="Close Chat">×</button>
+                </header>
+                <div class="window-content chat-content">
+                    <div class="chat-layout">
+                        <select id="chat-contact" aria-label="Select contact">
+                            <option value="Eevee">Eevee</option>
+                            <option value="Ragnarok">Ragnarok</option>
+                            <option value="VaporBot">VaporBot</option>
+                        </select>
+                        <div id="chat-log" class="chat-log"></div>
+                        <div class="chat-input-row">
+                            <input id="chat-input" type="text" placeholder="Type a nostalgic message..." aria-label="Chat message">
+                            <button id="chat-send">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article id="monitor-window" class="window hidden" role="dialog" aria-label="System Monitor">
+                <header class="window-titlebar drag-handle">
+                    <h2>📊 System Monitor</h2>
+                    <button class="close-window" data-close="monitor-window" aria-label="Close Monitor">×</button>
+                </header>
+                <div class="window-content monitor-content">
+                    <p>CPU: <strong id="monitor-cpu">0%</strong></p>
+                    <p>RAM: <strong id="monitor-ram">0%</strong></p>
+                    <p>Glitch Flux: <strong id="monitor-flux">0%</strong></p>
+                    <div class="meter"><span id="meter-cpu"></span></div>
+                    <div class="meter"><span id="meter-ram"></span></div>
+                    <div class="meter"><span id="meter-flux"></span></div>
+                </div>
+            </article>
+
+            <article id="console-window" class="window hidden" role="dialog" aria-label="Glitch Console">
+                <header class="window-titlebar drag-handle">
+                    <h2>⌨ Glitch Console</h2>
+                    <button class="close-window" data-close="console-window" aria-label="Close Console">×</button>
+                </header>
+                <div class="window-content console-content">
+                    <div id="console-log" class="console-log"></div>
+                    <div class="chat-input-row">
+                        <input id="console-input" type="text" placeholder="Try: vibes on | dream off | glitch now" aria-label="Console command">
+                        <button id="console-run">Run</button>
+                    </div>
+                </div>
+            </article>
+
+            <article id="screensaver-window" class="window hidden" role="dialog" aria-label="Screensaver Control">
+                <header class="window-titlebar drag-handle">
+                    <h2>🛌 Screensaver</h2>
+                    <button class="close-window" data-close="screensaver-window" aria-label="Close Screensaver">×</button>
+                </header>
+                <div class="window-content">
+                    <p>Launch a floating vapor screensaver. Click anywhere to exit.</p>
+                    <button id="start-screensaver">Start Screensaver</button>
+                </div>
+            </article>
+        </section>
+
+        <footer id="taskbar" aria-label="Taskbar">
+            <button id="start-button" aria-label="Open Start Menu">
+                <img src="images/start%20button.jpg" alt="Start">
+            </button>
+
+            <div id="taskbar-programs">
+                <button class="taskbar-launch" data-open="music-window">Music</button>
+                <button class="taskbar-launch" data-open="visualizer-window">Visualizer</button>
+                <button class="taskbar-launch" data-open="buddy-window">Buddies</button>
+                <button class="taskbar-launch" data-open="games-window">Games</button>
+            </div>
+
+            <p id="taskbar-clock">00:00</p>
+        </footer>
+
+        <aside id="start-menu" class="hidden" aria-label="Start Menu">
+            <div class="start-menu-header">VaporOS</div>
+            <button class="start-menu-item" data-open="music-window"> Open Music Player</button>
+            <button class="start-menu-item" data-open="visualizer-window"> Open Visualizer</button>
+            <button class="start-menu-item" data-open="buddy-window"> Open Buddies</button>
+            <button class="start-menu-item" data-open="games-window"> Open Games</button>
+            <button class="start-menu-item" data-open="browser-window"> Open Retro Browser</button>
+            <button class="start-menu-item" data-open="photo-window"> Open Photo Viewer</button>
+            <button class="start-menu-item" data-open="paint-window"> Open Paint Lite</button>
+            <button class="start-menu-item" data-open="chat-window"> Open Chat Client</button>
+            <button class="start-menu-item" data-open="monitor-window"> Open System Monitor</button>
+            <button class="start-menu-item" data-open="console-window"> Open Glitch Console</button>
+            <button class="start-menu-item" data-open="screensaver-window"> Open Screensaver</button>
+            <button class="start-menu-item" data-action="extra-vibes"> EXTRA VIBES</button>
+            <label class="start-menu-control" for="wave-strength-slider">
+                Wave Strength
+                <input id="wave-strength-slider" type="range" min="0" max="100" value="8" aria-label="Wave strength">
+            </label>
+            <label class="start-menu-control start-menu-toggle">
+                <span>Chromatic Aberration</span>
+                <input id="chromatic-toggle" type="checkbox" aria-label="Chromatic Aberration">
+            </label>
+            <label class="start-menu-control start-menu-toggle">
+                <span>Enhanced Scanlines</span>
+                <input id="scanlines-toggle" type="checkbox" aria-label="Enhanced Scanlines">
+            </label>
+            <label class="start-menu-control start-menu-toggle">
+                <span>Dream Mode</span>
+                <input id="dream-mode-toggle" type="checkbox" aria-label="Dream Mode">
+            </label>
+            <label class="start-menu-control start-menu-toggle">
+                <span>Wave Distortions</span>
+                <input id="wave-distortion-toggle" type="checkbox" aria-label="Wave Distortions">
+            </label>
+            <label class="start-menu-control start-menu-toggle">
+                <span>Open Start Menu on Boot</span>
+                <input id="start-menu-on-boot" type="checkbox" aria-label="Open Start Menu on Boot">
+            </label>
+            <button class="start-menu-item power" data-action="restart">  Restart</button>
+            <button class="start-menu-item power" data-action="shutdown">⏻ Shut Down</button>
+        </aside>
+    </main>
+
+    <section id="power-screen" class="hidden" aria-live="polite" aria-label="Power Screen">
+        <h2 id="power-title">VaporOS</h2>
+        <p id="power-message">System powered down.</p>
+        <div class="transport-controls">
+            <button id="power-on">Power On</button>
+            <button id="power-restart">Restart</button>
+        </div>
+    </section>
+
+    <section id="screensaver-overlay" class="hidden" aria-live="polite">
+        <img id="screensaver-logo" src="images/vaporwave-disco.gif" alt="Screensaver logo">
+        <p>Click anywhere to return</p>
+    </section>
+
+    <audio id="audio-player" preload="metadata"></audio>
+    <audio id="ui-sfx" preload="auto"></audio>
+    <audio id="boot-sfx" preload="auto" src="SFX/bootup.mp3"></audio>
+    <audio id="glitch-sfx" preload="auto" src="SFX/glitch.mp3"></audio>
+    <script src="https://unpkg.com/cursor-effects@latest/dist/browser.js"></script>
+    <script src="manifest.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
